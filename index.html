@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .button {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Шаблонизация</h1>
+    <div class="container">
+    </div>
+    <button class="game-button">Проверь силу клика!</button>
+    <script>
+        const container = document.querySelector('.container');
+        const button = document.querySelector('.game-button');
+
+        const texts = {
+            0: 'хиляк',
+            1: 'слабак',
+            2: 'трус',
+            3: 'дилетант',
+            4: 'норм',
+            5: 'обыватель',
+            6: 'спортмен',
+            7: 'мастер',
+            8: 'силач',
+            9: 'машина',
+        };
+
+        button.onclick = function() {
+            container.innerHTML = '';
+            const array = [];
+
+            const power = Math.random() * 10;
+
+            for (let i = 0; i < power; i++) {
+                array.push(i);
+            }
+
+            const fragment = document.createDocumentFragment();
+
+            array.forEach((value) => {
+                const valueContainer = document.createElement('div');
+
+                valueContainer.textContent = value;
+
+                fragment.insertBefore(valueContainer, container.firstChild);
+
+                const text = document.createTextNode(texts[value]);
+
+                console.log(text);
+
+                fragment.insertBefore(text, container.firstChild);
+            });
+
+            container.appendChild(fragment);
+        }
+    </script>
+</body>
+</html>

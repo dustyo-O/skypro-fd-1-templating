@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .button {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Шаблонизация</h1>
+    <div class="container">
+        <div>
+            <button class="button">Кнопка-сообщение</button>
+            <button class="button">Кнопка-сообщение</button>
+            <button class="button">Кнопка-сообщение</button>
+            <button class="button">Кнопка-сообщение</button>
+            <button class="button">Кнопка-сообщение</button>
+            <button class="button">Кнопка-сообщение</button>
+            <button class="to-start">Добавить в начало</button>
+        </div>
+    </div>
+    <script>
+        const container = document.querySelector('.container');
+
+        const buttons = document.querySelectorAll('.button');
+
+        function buttonClickHandler() {
+            const target = this;
+
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+
+            const parent = target.parentElement;
+
+            parent.insertBefore(radio, target.nextElementSibling);
+        }
+
+        buttons.forEach(button => {
+            button.onclick = buttonClickHandler;
+        });
+
+        const buttonToStart = document.querySelector('.to-start');
+
+        buttonToStart.onclick = function toStartClickHandler() {
+            const target = this;
+
+            const radio = document.createElement('input');
+            radio.type = 'range';
+
+            const parent = target.parentElement;
+            const firstChild = parent.firstElementChild;
+
+            parent.insertBefore(radio, firstChild);
+        }
+    </script>
+</body>
+</html>

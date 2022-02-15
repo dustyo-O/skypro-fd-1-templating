@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .photo {
+            display: inline-block;
+
+            width: 300px;
+            margin-top: 10px;
+            margin-right: 14px;
+            border: 1px solid black;
+            border-radius: 8px;
+        }
+
+        .photo__image {
+            height: 200px;
+            border-radius: 8px 8px 0 0;
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .photo__info {
+            display: flex;
+
+            padding: 10px 12px;
+        }
+
+        .photo__user {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .photo__user-avatar {
+            border-radius: 50%;
+        }
+
+        .photo__user-name {
+            flex-grow: 1;
+
+            margin-left: 8px;
+        }
+
+        .photo__heart {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <section class="gallery">
+        <article class="photo">
+            <div class="photo__image" style="background-image: url(https://images.unsplash.com/photo-1471897488648-5eae4ac6686b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNjA2MzJ8MXwxfGFsbHwxfHx8fHx8Mnx8MTY0MzM4NDI4OQ&ixlib=rb-1.2.1&q=80&w=400);">
+            </div>
+            <footer class="photo__info">
+                <div class="photo__user">
+                    <img class="photo__user-avatar" src="https://images.unsplash.com/profile-1540865537012-80ce3b955019?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32">
+                    <div class="photo__user-name">Sarah Dorweiler</div>
+                </div>
+                <span class="photo__likes">418 <i class="photo__heart fa fa-heart"></i></span>
+            </footer>
+        </article>
+    </section>
+    <script src="https://kit.fontawesome.com/80d0029610.js" crossorigin="anonymous"></script>
+    <script src="data.js"></script>
+    <script>
+        const photos = JSON.parse(photosData);
+        const gallery = document.querySelector('.gallery');
+
+        function photoVanillaTemplate(photo) {
+            const photoElement = document.createElement('article');
+            photoElement.classList.add('photo');
+
+            const photoImage = document.createElement('div');
+            photoImage.classList.add('photo__image');
+            photoImage.style.backgroundImage = `url(${photo.urls.small})`;
+
+            photoElement.appendChild(photoImage);
+
+            const photoInfo = document.createElement('footer');
+            photoInfo.classList.add('photo__info');
+
+            photoElement.appendChild(photoInfo);
+
+            const photoUser = document.createElement('div');
+            photoUser.classList.add('photo__user');
+
+            photoInfo.appendChild(photoUser);
+
+            const photoUserAvatar = document.createElement('img');
+            photoUserAvatar.classList.add('photo__user-avatar');
+            photoUserAvatar.src = photo.user.profile_image.small;
+
+            photoUser.appendChild(photoUserAvatar);
+
+            const photoUserName = document.createElement('div');
+            photoUserName.classList.add('photo__user-name');
+            photoUserName.textContent = photo.user.name;
+
+            photoUser.appendChild(photoUserName);
+
+            const photoLikes = document.createElement('span');
+            photoLikes.classList.add('photo__likes');
+
+            photoInfo.appendChild(photoLikes);
+
+            const textLikes = document.createTextNode(photo.likes + ' ');
+
+            photoLikes.appendChild(textLikes);
+
+            const photoHeart = document.createElement('i');
+            photoHeart.classList.add('photo__heart', 'fa', 'fa-heart');
+
+            photoLikes.appendChild(photoHeart);
+
+            return photoElement;
+        }
+
+        function photoStringTemplate(photo) {
+            return `
+            <article class="photo">
+                <div class="photo__image" style="background-image: url(${photo.urls.small});">
+                </div>
+                <footer class="photo__info">
+                    <div class="photo__user">
+                        <img class="photo__user-avatar" src="${photo.user.profile_image.small}">
+                        <div class="photo__user-name">${photo.user.name}</div>
+                    </div>
+                    <span class="photo__likes">${photo.likes} <i class="photo__heart fa fa-heart"></i></span>
+                </footer>
+            </article>`;
+        }
+
+        console.log();
+
+
+        photos.forEach(photo => {
+            console.log(photo);
+            gallery.appendChild(photoVanillaTemplate(photo));
+        });
+
+
+        // gallery.innerHTML = gallery.innerHTML + photoStringTemplate(photos[0]);
+        // gallery.innerHTML += photoStringTemplate(photos[1]);
+        // gallery.innerHTML += photoStringTemplate(photos[2]);
+    </script>
+</body>
+</html>
